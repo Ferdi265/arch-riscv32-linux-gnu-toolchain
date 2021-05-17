@@ -18,7 +18,7 @@ build.
 
 - `riscv32-linux-gnu-linux-api-headers`
 - `riscv32-linux-gnu-binutils`
-- `riscv32-linux-gnu-gdb`
+- `riscv32-linux-gnu-gdb` (optional)
 - `riscv32-linux-gnu-gcc-stage1`
 - `riscv32-linux-gnu-glibc`
 - `riscv32-linux-gnu-gcc`
@@ -29,7 +29,7 @@ After a successful build, only the following packages are needed:
 
 - `riscv32-linux-gnu-linux-api-headers`
 - `riscv32-linux-gnu-binutils`
-- `riscv32-linux-gnu-gdb`
+- `riscv32-linux-gnu-gdb` (optional)
 - `riscv32-linux-gnu-glibc`
 - `riscv32-linux-gnu-gcc`
 

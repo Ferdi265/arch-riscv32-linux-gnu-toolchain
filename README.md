@@ -32,3 +32,10 @@ After a successful build, only the following packages are needed:
 - `riscv32-linux-gnu-gdb`
 - `riscv32-linux-gnu-glibc`
 - `riscv32-linux-gnu-gcc`
+
+## Updating
+
+These PKGBUILDs are thin patches on top of the `riscv64-linux-gnu` packages from
+the ArchLinux Build System (ABS). The patches are applied in a separate commit,
+so rebasing onto newer versions of the packages is relatively easy. The
+unpatched PKGBUILDs are provided in the branch `base`.

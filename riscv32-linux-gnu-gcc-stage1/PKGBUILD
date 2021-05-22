@@ -15,6 +15,7 @@ license=('GPL' 'LGPL' 'FDL')
 groups=('risc-v')
 depends=("$_target-binutils" 'libmpc')
 provides=("$_target-gcc")
+conflicts=("$_target-gcc")
 options=('!emptydirs' '!strip')
 source=("https://gcc.gnu.org/pub/gcc/releases/gcc-$pkgver/gcc-$pkgver.tar.xz"
         "https://libisl.sourceforge.io/isl-$_islver.tar.xz")

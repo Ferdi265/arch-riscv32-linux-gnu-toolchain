@@ -3,17 +3,18 @@
 # Contributor: Alexander F. Rødseth <xyproto@archlinux.org>
 # Contributor: Emil Renner Berthing <aur@esmil.dk>
 
-_target=riscv64-linux-gnu
-pkgname=$_target-gcc
+_target=riscv32-linux-gnu
+pkgname=$_target-gcc-stage1
 pkgver=11.2.0
 _islver=0.24
 pkgrel=1
-pkgdesc='Cross compiler for 32-bit and 64-bit RISC-V'
+pkgdesc='Cross compiler for 32-bit RISC-V (stage1 compiler)'
 arch=('x86_64')
 url='https://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
 groups=('risc-v')
-depends=("$_target-binutils" "$_target-glibc" 'libmpc')
+depends=("$_target-binutils" 'libmpc')
+provides=("$_target-gcc")
 options=('!emptydirs' '!strip')
 source=("https://gcc.gnu.org/pub/gcc/releases/gcc-$pkgver/gcc-$pkgver.tar.xz"
         "https://libisl.sourceforge.io/isl-$_islver.tar.xz")
@@ -58,7 +59,8 @@ build() {
       --program-prefix=$_target- \
       --with-local-prefix=/usr/$_target \
       --with-sysroot=/usr/$_target \
-      --with-build-sysroot=/usr/$_target \
+      --with-newlib \
+      --without-headers \
       --libdir=/usr/lib \
       --libexecdir=/usr/lib \
       --target=$_target \
@@ -73,9 +75,13 @@ build() {
       --disable-libssp \
       --disable-multilib \
       --disable-werror \
-      --enable-languages=c,c++ \
-      --enable-shared \
-      --enable-threads=posix \
+      --disable-shared \
+      --disable-threads \
+      --disable-libatomic \
+      --disable-libmudflap \
+      --disable-libquadmath \
+      --disable-libgomp \
+      --enable-languages=c \
       --enable-__cxa_atexit \
       --enable-clocale=gnu \
       --enable-gnu-unique-object \
@@ -86,12 +92,14 @@ build() {
       --enable-gnu-indirect-function \
       --enable-default-pie \
       --enable-checking=release
-  make
+  make inhibit-libc=true all-gcc all-target-libgcc
 }
 
 package() {
-  make -C gcc-build DESTDIR="$pkgdir" \
-    install-gcc install-target-libgcc install-target-libstdc++-v3
+  mkdir -p "$pkgdir/usr/$_target/lib"
+
+  make -C gcc-build DESTDIR="$pkgdir" inhibit-libc=true \
+    install-gcc install-target-libgcc
 
   # Strip target binaries
   find "$pkgdir/usr/lib/gcc/$_target/" "$pkgdir/usr/$_target/lib" -type f \
@@ -105,7 +113,10 @@ package() {
     -and \( -executable \) -exec strip '{}' \;
 
   # Remove files that conflict with host gcc package
-  rm -r "$pkgdir/usr/share/"{man/man7,info,"gcc-$pkgver"}
+  rm -r "$pkgdir/usr/share/"{man/man7,info}
+  if [[ -d "$pkgdir/usr/share/gcc-$pkgver" ]]; then
+    rm -r "$pkgdir/usr/share/gcc-$pkgver"
+  fi
 }
 
 # vim: ts=2 sw=2 et:

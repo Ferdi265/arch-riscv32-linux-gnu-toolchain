@@ -2,11 +2,11 @@
 # Maintainer: Alexander F. Rødseth <xyproto@archlinux.org>
 # Contributor: Emil Renner Berthing <aur@esmil.dk>
 
-_target=riscv64-linux-gnu
+_target=riscv32-linux-gnu
 pkgname=$_target-binutils
 pkgver=2.38
 pkgrel=1
-pkgdesc='Assemble and manipulate binary and object files for 32-bit and 64-bit RISC-V'
+pkgdesc='Assemble and manipulate binary and object files for 32-bit RISC-V'
 arch=(x86_64)
 url='https://gnu.org/software/binutils/'
 license=(GPL)

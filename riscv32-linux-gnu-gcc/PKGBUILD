@@ -3,12 +3,12 @@
 # Contributor: Alexander F. Rødseth <xyproto@archlinux.org>
 # Contributor: Emil Renner Berthing <aur@esmil.dk>
 
-_target=riscv64-linux-gnu
+_target=riscv32-linux-gnu
 pkgname=$_target-gcc
 pkgver=11.2.0
 _islver=0.24
 pkgrel=1
-pkgdesc='Cross compiler for 32-bit and 64-bit RISC-V'
+pkgdesc='Cross compiler for 32-bit RISC-V'
 arch=('x86_64')
 url='https://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
@@ -90,6 +90,8 @@ build() {
 }
 
 package() {
+  mkdir -p "$pkgdir/usr/$_target/lib"
+
   make -C gcc-build DESTDIR="$pkgdir" \
     install-gcc install-target-libgcc install-target-libstdc++-v3
 
@@ -105,7 +107,10 @@ package() {
     -and \( -executable \) -exec strip '{}' \;
 
   # Remove files that conflict with host gcc package
-  rm -r "$pkgdir/usr/share/"{man/man7,info,"gcc-$pkgver"}
+  rm -r "$pkgdir/usr/share/"{man/man7,info}
+  if [[ -d "$pkgdir/usr/share/gcc-$pkgver" ]]; then
+    rm -r "$pkgdir/usr/share/gcc-$pkgver"
+  fi
 }
 
 # vim: ts=2 sw=2 et:

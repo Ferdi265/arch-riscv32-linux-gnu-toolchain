@@ -2,11 +2,11 @@
 # Maintainer: Alexander F. Rødseth <xyproto@archlinux.org>
 # Contributor: Anatol Pomozov <anatol.pomozov@gmail.com>
 
-_target=riscv64-linux-gnu
+_target=riscv32-linux-gnu
 pkgname=$_target-glibc
 pkgver=2.35
 pkgrel=1
-pkgdesc='GNU C Library RISCV target'
+pkgdesc='GNU C Library for 32-bit RISCV'
 arch=(any)
 url='https://www.gnu.org/software/libc/'
 license=(GPL LGPL)

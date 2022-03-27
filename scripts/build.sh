@@ -43,7 +43,7 @@ c-clean-makepkg() {
 
 c-installpkg() {
     (set -x
-        sudo pacman -r "$CHROOT_PATH/$CHROOT_USER" --noconfirm -U "$@"
+        yes | sudo pacman -r "$CHROOT_PATH/$CHROOT_USER" -U "$@"
     )
 }
 

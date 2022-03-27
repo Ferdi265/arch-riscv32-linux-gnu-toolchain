@@ -33,6 +33,8 @@ After a successful build, only the following packages are needed:
 - `riscv32-linux-gnu-glibc`
 - `riscv32-linux-gnu-gcc`
 
+The script `scripts/build.sh` automates this build order.
+
 ## Updating
 
 These PKGBUILDs are thin patches on top of the `riscv64-linux-gnu` packages from

@@ -121,4 +121,10 @@ elif [[ $# -eq 0 ]]; then
     done
 
     c-host-install
+elif [[ $# -eq 2 && $1 == "--continue" ]]; then
+    for ((i = $2; i < ${#BUILD_ORDER[@]}; i++)); do
+        c-krunstep "$i"
+    done
+
+    c-host-install
 fi
